@@ -2,10 +2,9 @@ import Link from "next/link"
 import Image from "next/image"
 import logo from "@assets/icon.png"
 import { SunIcon, MoonIcon } from "@heroicons/react/24/outline"
+import { useState } from "react"
 
-import React, { useState } from "react"
-
-export const Header: React.FC = () => {
+export const Header = () => {
     const [theme, setTheme] = useState<'cmyk' | 'dracula'>('cmyk')
 
     const toggleTheme = () => {
