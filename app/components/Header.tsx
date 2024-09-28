@@ -24,7 +24,7 @@ export const Header = () => {
                 />
             </Link>
 
-            <button onClick={toggleTheme} className="flex items-cente">
+            <button onClick={toggleTheme} className="flex items-center">
                 {theme === 'cmyk' ? (
                     <MoonIcon className="w-6 h-6 text-gray-800 transition-transform duration-200 transform hover:scale-110" aria-label="Switch to Dracula theme" />
                 ) : (
