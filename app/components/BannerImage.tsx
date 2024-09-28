@@ -25,6 +25,7 @@ export const BannerImage = () => {
                     src={bannerImage}
                     alt="Rick and Morty Banner"
                     width={400}
+                    className="filter drop-shadow-lg"
                 />
             </div>
         </div>
