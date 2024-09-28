@@ -20,12 +20,13 @@ export const BannerImage = () => {
 
     return (
         <div className="relative w-full h-[400px] flex justify-center items-center">
-            <div className="absolute top-[-50px]">
+            <div className="absolute top-[-50px] p-2">
                 <Image
                     src={bannerImage}
                     alt="Rick and Morty Banner"
                     width={400}
                     className="filter drop-shadow-lg"
+                    priority
                 />
             </div>
         </div>
