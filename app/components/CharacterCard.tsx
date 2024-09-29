@@ -12,9 +12,9 @@ interface CharacterCardProps {
 }
 
 export const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
-    let badgeClass = "badge border-0 text-white p-3"
-    let speciesClass = "badge border-0 text-white p-3"
-    let genderClass = "badge border-0 text-white p-3"
+    let badgeClass = "badge border-0 text-white"
+    let speciesClass = "badge border-0 text-white"
+    let genderClass = "badge border-0 text-white"
 
     switch (character.status) {
         case "Alive":
