@@ -15,3 +15,11 @@ export interface Character {
     episode: string[]
     url: string
 }
+
+export interface Episode {
+    id: number
+    name: string
+    air_date: string
+    episode: string
+    url: string
+}
