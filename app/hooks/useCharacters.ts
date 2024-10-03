@@ -7,9 +7,14 @@ interface UseCharactersResult {
     totalPages?: number
 }
 
-export async function useCharacters(pageID: number): Promise<UseCharactersResult> {
+export async function useCharacters(pageID: number, nameFilter?: string): Promise<UseCharactersResult> {
     try {
-        const response = await api.get(`/character?page=${pageID}`)       
+        const query = nameFilter 
+            ? `/character?name=${nameFilter}&page=${pageID}` 
+            : `/character?page=${pageID}`
+        
+        const response = await api.get(query)
+        
         const characters: Character[] = response.data.results
         const totalPages: number = response.data.info.pages
         return { data: characters, totalPages }
