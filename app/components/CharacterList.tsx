@@ -5,7 +5,7 @@ import { Character } from "types"
 import { Pagination } from "@components/Pagination"
 import { LoadingSpinner } from "@components/LoadingSpinner"
 
-export const CharacterList: React.FC = () => {
+export const CharacterList: React.FC<{ searchQuery: string }> = ({ searchQuery }) => {
     const [characters, setCharacters] = useState<Character[]>([])
     const [error, setError] = useState<string | null>(null)
 
@@ -17,8 +17,8 @@ export const CharacterList: React.FC = () => {
     useEffect(() => {
         const fetchCharacters = async () => {
             setIsLoading(true)
-            const result = await useCharacters(currentPage)
-            setIsLoading(false)            
+            const result = await useCharacters(currentPage, searchQuery)
+            setIsLoading(false)
 
             if (result.error) {
                 setError(result.error)
@@ -29,7 +29,7 @@ export const CharacterList: React.FC = () => {
         }
 
         fetchCharacters()
-    }, [currentPage])
+    }, [currentPage, searchQuery])
 
     if (error) {
         return <div>Error: {error}</div>
@@ -48,7 +48,7 @@ export const CharacterList: React.FC = () => {
             </section>
 
             <Pagination
-                currentPage={currentPage} 
+                currentPage={currentPage}
                 totalPages={totalPages}
                 onPageChange={setCurrentPage}
             />
