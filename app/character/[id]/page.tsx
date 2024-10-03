@@ -1,5 +1,5 @@
 "use client"
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { LoadingSpinner } from "@components/LoadingSpinner"
 import { useCharacterDetail } from "@hooks/useCharacterDetail"
 import { useEpisodes } from "@hooks/useEpisode"
@@ -12,6 +12,8 @@ import { Badge } from "@components/Badge"
 
 const CharacterDetail: React.FC = () => {
     const { id } = useParams()
+    const router = useRouter()
+
     const [character, setCharacter] = useState<Character | null>(null)
     const [episodes, setEpisodes] = useState<Episode[]>([])
     const [error, setError] = useState<string | null>(null)
@@ -41,6 +43,10 @@ const CharacterDetail: React.FC = () => {
         fetchCharacterDetail()
     }, [id])
 
+    const handleSearch = (name: string) => {
+        router.push(`/?search=${name}`)
+    }
+
     if (loading) {
         return <LoadingSpinner />
     }
@@ -51,7 +57,7 @@ const CharacterDetail: React.FC = () => {
 
     return (
         <>
-            <Header />
+            <Header onSearch={handleSearch} />
             <section className="flex flex-col justify-center items-center gap-3 min-h-full p-6 mx-auto bg-base-100" style={{ width: '500px' }}>
                 <div className="flex flex-col items-center justify-center p-2 w-full">
                     <figure className="mb-4 drop-shadow-lg">
