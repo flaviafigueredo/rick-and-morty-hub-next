@@ -4,6 +4,7 @@ import { CharacterCard } from "@components/CharacterCard"
 import { Character } from "types"
 import { Pagination } from "@components/Pagination"
 import { LoadingSpinner } from "@components/LoadingSpinner"
+import { ErrorMessage } from "@components/ErrorMessage"
 
 export const CharacterList: React.FC<{ searchQuery: string }> = ({ searchQuery }) => {
     const [characters, setCharacters] = useState<Character[]>([])
@@ -32,7 +33,7 @@ export const CharacterList: React.FC<{ searchQuery: string }> = ({ searchQuery }
     }, [currentPage, searchQuery])
 
     if (error) {
-        return <div>Error: {error}</div>
+        return <ErrorMessage message={error} />
     }
 
     if (isLoading) {
