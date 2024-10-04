@@ -1,6 +1,5 @@
 import Image from "next/image"
 import footerImg from "@assets/footer-img.png"
-import { HeartIcon } from "@heroicons/react/24/outline"
 
 export const Footer = () => {
     const currentYear = new Date().getFullYear();
@@ -11,11 +10,7 @@ export const Footer = () => {
                 <p className="text-sm">© {currentYear} All rights reserved.</p>
 
                 <p className="text-sm">
-                    Developed with
-                    <span className="inline p-1">
-                        <HeartIcon className="w-4 inline" />
-                    </span>
-                    by  <a href="https://flaviafigueredo.github.io/portfolio/"
+                    Developed with 🩶 by <a href="https://flaviafigueredo.github.io/portfolio/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="underline">
