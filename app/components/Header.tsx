@@ -18,25 +18,30 @@ export const Header: React.FC<HeaderProps> = ({ onSearch }) => {
     }
 
     return (
-        <header className="flex justify-between items-center p-4">
+        <header className="navbar bg-base-100 shadow-lg flex justify-between items-center p-4 gap-2">
             <Link href="/">
-                <Image
-                    src={logo}
-                    alt="Rick and Morty Logo"
-                    width={50}
-                    height={50}
-                />
+                <div>
+                    <Image
+                        src={logo}
+                        alt="Rick and Morty Logo"
+                        width={50}
+                        height={50}
+                    />
+                </div>
             </Link>
 
             <div className="flex items-center gap-2">
                 <SearchForm onSearch={onSearch} />
 
-                <button onClick={toggleTheme}>
+                <button aria-label="Toggle theme">
                     <label className="grid cursor-pointer place-items-center">
                         <input
                             type="checkbox"
                             value="synthwave"
-                            className="toggle theme-controller bg-base-content col-span-2 col-start-1 row-start-1" />
+                            className="toggle theme-controller bg-base-content col-span-2 col-start-1 row-start-1"
+                            checked={theme === 'dracula'}
+                            onChange={toggleTheme}
+                        />
                         <svg
                             className="stroke-base-100 fill-base-100 col-start-1 row-start-1"
                             xmlns="http://www.w3.org/2000/svg"
