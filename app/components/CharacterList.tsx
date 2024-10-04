@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import { useCharacters } from "@hooks/useCharacters"
 import { CharacterCard } from "@components/CharacterCard"
 import { Character } from "types"
@@ -14,6 +14,8 @@ export const CharacterList: React.FC<{ searchQuery: string }> = ({ searchQuery }
     const [totalPages, setTotalPages] = useState<number>(0)
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
+
+    const listRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         const fetchCharacters = async () => {
@@ -41,8 +43,8 @@ export const CharacterList: React.FC<{ searchQuery: string }> = ({ searchQuery }
     }
 
     return (
-        <div>
-            <section className="grid max-w-7xl mx-auto p-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <>
+            <section ref={listRef} className="grid max-w-7xl mx-auto p-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {characters.map(character => (
                     <CharacterCard key={character.id} character={character} />
                 ))}
@@ -51,8 +53,11 @@ export const CharacterList: React.FC<{ searchQuery: string }> = ({ searchQuery }
             <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
-                onPageChange={setCurrentPage}
+                onPageChange={(page) => {
+                    setCurrentPage(page)
+                    listRef.current?.scrollIntoView({ behavior: 'smooth' })
+                }}
             />
-        </div>
+        </>
     )
 }
