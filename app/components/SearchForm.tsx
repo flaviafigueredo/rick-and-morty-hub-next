@@ -11,14 +11,7 @@ export const SearchForm: React.FC<SearchFormProps> = ({ onSearch }) => {
         e.preventDefault()
         if (inputValue.trim()) {
             onSearch(inputValue)
-        }
-    }
-
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === 'Enter') {
-            if (inputValue.trim()) {
-                onSearch(inputValue)
-            }
+            setInputValue('')
         }
     }
 
@@ -30,7 +23,6 @@ export const SearchForm: React.FC<SearchFormProps> = ({ onSearch }) => {
                 placeholder="Search by name"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={handleKeyDown}
             />
             <button type="submit">
                 <svg
