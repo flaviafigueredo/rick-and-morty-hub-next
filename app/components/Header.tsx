@@ -19,7 +19,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearch }) => {
 
     return (
         <header className="navbar bg-base-100 shadow-lg flex justify-between items-center p-4 gap-2">
-            <Link href="/">
+            <Link href="/" onClick={() => onSearch('')}>
                 <div>
                     <Image
                         src={logo}
