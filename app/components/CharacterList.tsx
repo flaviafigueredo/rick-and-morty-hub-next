@@ -25,7 +25,9 @@ export const CharacterList: React.FC<{ searchQuery: string }> = ({ searchQuery }
 
             if (result.error) {
                 setError(result.error)
+                setCharacters([])
             } else if (result.data) {
+                setError(null)
                 setCharacters(result.data)
                 setTotalPages(result.totalPages || 0)
             }
@@ -44,20 +46,26 @@ export const CharacterList: React.FC<{ searchQuery: string }> = ({ searchQuery }
 
     return (
         <>
-            <section ref={listRef} className="grid max-w-7xl mx-auto p-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {characters.map(character => (
-                    <CharacterCard key={character.id} character={character} />
-                ))}
-            </section>
+            {characters.length > 0 ? (
+                <section ref={listRef} className="grid max-w-7xl mx-auto p-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {characters.map(character => (
+                        <CharacterCard key={character.id} character={character} />
+                    ))}
+                </section>
+            ) : (
+                <p className="text-center">No characters found.</p>
+            )}
 
-            <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={(page) => {
-                    setCurrentPage(page)
-                    listRef.current?.scrollIntoView({ behavior: 'smooth' })
-                }}
-            />
+            {characters.length > 0 && (
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={(page) => {
+                        setCurrentPage(page)
+                        listRef.current?.scrollIntoView({ behavior: 'smooth' })
+                    }}
+                />
+            )}
         </>
     )
 }
