@@ -58,7 +58,7 @@ const CharacterDetail: React.FC = () => {
     return (
         <>
             <Header onSearch={handleSearch} />
-            <section className="flex flex-col justify-center items-center gap-3 min-h-full p-6 mx-auto bg-base-100" style={{ width: '500px' }}>
+            <main className="flex flex-col justify-center items-center gap-3 min-h-full p-6 mx-auto" style={{ maxWidth: '500px' }}>
                 <div className="flex flex-col items-center justify-center p-2 w-full">
                     <figure className="mb-4 drop-shadow-lg">
                         <img src={character?.image} alt={`${character?.name} image`} className="rounded-lg" />
@@ -107,7 +107,7 @@ const CharacterDetail: React.FC = () => {
                 <Link href="/" className="self-end">
                     <button className="btn btn-neutral self-end">Back</button>
                 </Link>
-            </section>
+            </main>
             <Footer />
         </>
     )
