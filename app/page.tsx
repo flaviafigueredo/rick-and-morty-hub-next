@@ -30,7 +30,9 @@ const Home: React.FC = () => {
     <>
       <Header onSearch={handleSearch} />
       <BannerImage />
-      <CharacterList searchQuery={searchQuery} />
+      <main>
+        <CharacterList searchQuery={searchQuery} />
+      </main>
       <Footer />
     </>
   )
