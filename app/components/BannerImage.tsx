@@ -20,7 +20,7 @@ export const BannerImage = () => {
 
     return (
         <div className="relative w-full h-[500px] flex flex-col justify-center items-center">
-            <svg width="100%" height="300" viewBox="0 0 500 200" className="absolute top-0">
+            <svg width="100%" height="300" viewBox="0 0 500 200" className="absolute top-0" aria-hidden="true">
                 <defs>
                     <path id="curve" d="M 0 100 Q 250 0, 500 100" />
                 </defs>

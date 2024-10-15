@@ -13,14 +13,15 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
                 className="join-item btn"
                 onClick={() => {
                     if (currentPage > 1) {
-                        onPageChange(currentPage - 1) 
+                        onPageChange(currentPage - 1)
                     }
                 }}
                 disabled={currentPage === 1}
+                aria-label="Previous page"
             >
                 «
             </button>
-            <button className="join-item btn" style={{color: 'var(--fallback-bc, oklch(var(--bc) / var(--tw-text-opacity)))', cursor: 'default', pointerEvents: 'none'}}>
+            <button className="join-item btn" style={{ color: 'var(--fallback-bc, oklch(var(--bc) / var(--tw-text-opacity)))', cursor: 'default', pointerEvents: 'none' }}>
                 Page {currentPage} of {totalPages}
             </button>
             <button
@@ -31,6 +32,7 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
                     }
                 }}
                 disabled={currentPage === totalPages}
+                aria-label="Next page"
             >
                 »
             </button>

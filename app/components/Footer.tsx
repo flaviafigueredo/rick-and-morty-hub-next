@@ -19,7 +19,8 @@ export const Footer = () => {
                     Developed with 🩶 by <a href="https://flaviafigueredo.github.io/portfolio/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="underline">
+                        className="underline"
+                        aria-label="Visit Flávia Figueredo's portfolio">
                         Flávia Figueredo
                     </a>
                 </p>

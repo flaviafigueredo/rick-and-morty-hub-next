@@ -23,8 +23,9 @@ export const SearchForm: React.FC<SearchFormProps> = ({ onSearch }) => {
                 placeholder="Search by name"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
+                aria-label="Character name"
             />
-            <button type="submit">
+            <button type="submit" aria-label="Search">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 16"

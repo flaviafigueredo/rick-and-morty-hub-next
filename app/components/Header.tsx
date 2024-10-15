@@ -19,7 +19,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearch }) => {
 
     return (
         <header className="navbar bg-base-100 shadow-lg flex justify-between items-center p-4 gap-2">
-            <Link href="/" onClick={() => onSearch('')}>
+            <Link href="/" onClick={() => onSearch('')} aria-label="Go to homepage">
                 <div>
                     <Image
                         src={logo}

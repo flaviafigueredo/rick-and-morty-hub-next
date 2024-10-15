@@ -13,9 +13,9 @@ interface CharacterCardProps {
     }
 }
 
-export const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {   
+export const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
     return (
-        <Link href={`/character/${character.id}`} passHref>
+        <Link href={`/character/${character.id}`} passHref aria-label={`View details of ${character.name}`}>
             <div className="card bg-base-100 shadow-xl hover:scale-105 cursor-pointer w-full sm:w-auto mx-auto" style={{ maxWidth: '320px', height: '470px' }}>
                 <figure className="w-full overflow-hidden">
                     <img src={character.image} alt={`${character.name} image`} className="w-full h-full object-cover" />

@@ -90,8 +90,8 @@ export const Badge: React.FC<BadgeProps> = ({ type, value }) => {
     }
 
     return (
-        <p className={badgeClass} aria-label={`${type}: ${value}`}>
+        <span className={badgeClass} aria-label={`${type}: ${value}`}>
             {value}
-        </p>
+        </span>
     )
 }

@@ -61,7 +61,9 @@ const CharacterDetail: React.FC = () => {
             <main className="flex flex-col justify-center items-center gap-3 min-h-full p-6 mx-auto" style={{ maxWidth: '500px' }}>
                 <div className="flex flex-col items-center justify-center p-2 w-full">
                     <figure className="mb-4 drop-shadow-lg">
-                        <img src={character?.image} alt={`${character?.name} image`} className="rounded-lg" />
+                        <img src={character?.image}
+                            alt={`Image of ${character?.name}, a ${character?.species} from ${character?.origin.name}`}
+                            className="rounded-lg" />
                     </figure>
 
                     <h2 className="card-title text-3xl font-bold mb-2">{character?.name}</h2>
@@ -73,21 +75,21 @@ const CharacterDetail: React.FC = () => {
                     </div>
 
                     <div className="w-full">
-                        <p className="text-lg pb-4">
+                        <p className="text-lg pb-4" aria-label="Character type">
                             <strong>Type:</strong> {character?.type || "Unknown"}
                         </p>
-                        <p className="text-lg pb-4">
+                        <p className="text-lg pb-4" aria-label="Character origin">
                             <strong>Origin:</strong> {character?.origin.name}
                         </p>
-                        <p className="text-lg">
+                        <p className="text-lg" aria-label="Character location">
                             <strong>Location:</strong> {character?.location.name}
                         </p>
 
-                        <details className="collapse collapse-arrow">
+                        <details className="collapse collapse-arrow" aria-expanded="false" aria-controls="episode-list">
                             <summary className="collapse-title text-lg px-0">
                                 <strong>Episodes</strong>
                             </summary>
-                            <div className="collapse-content p-0">
+                            <div className="collapse-content p-0" id="episode-list">
                                 {episodes.length > 0 ? (
                                     episodes.map((episode) => (
                                         <div key={episode.id} className="mb-2">
@@ -105,7 +107,7 @@ const CharacterDetail: React.FC = () => {
                 </div>
 
                 <Link href="/" className="self-end">
-                    <button className="btn btn-neutral self-end">Back</button>
+                    <button className="btn btn-neutral self-end" aria-label="Go back to character list">Back</button>
                 </Link>
             </main>
             <Footer />

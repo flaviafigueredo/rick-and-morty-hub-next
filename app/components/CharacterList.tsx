@@ -47,13 +47,16 @@ export const CharacterList: React.FC<{ searchQuery: string }> = ({ searchQuery }
     return (
         <>
             {characters.length > 0 ? (
-                <section ref={listRef} className="grid max-w-7xl mx-auto p-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <section ref={listRef} aria-labelledby="character-list-heading" className="grid max-w-7xl mx-auto p-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <h2 id="character-list-heading" className="sr-only">List of Characters</h2>
                     {characters.map(character => (
                         <CharacterCard key={character.id} character={character} />
                     ))}
                 </section>
             ) : (
-                <p className="text-center">No characters found.</p>
+                <section role="status" aria-live="polite" className="text-center">
+                    <p>No characters found.</p>
+                </section>
             )}
 
             {characters.length > 0 && (
