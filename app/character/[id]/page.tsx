@@ -1,58 +1,58 @@
-"use client"
-import { useParams, useRouter } from "next/navigation"
-import { LoadingSpinner } from "@components/LoadingSpinner"
-import { useCharacterDetail } from "@hooks/useCharacterDetail"
-import { useEpisodes } from "@hooks/useEpisode"
-import React, { useEffect, useState } from "react"
-import { Character, Episode } from "types"
-import Link from "next/link"
-import { Header } from "@components/Header"
-import { Footer } from "@components/Footer"
-import { Badge } from "@components/Badge"
+'use client';
+import { useParams, useRouter } from 'next/navigation';
+import { LoadingSpinner } from '@components/LoadingSpinner';
+import { useCharacterDetail } from '@hooks/useCharacterDetail';
+import { useEpisodes } from '@hooks/useEpisode';
+import React, { useEffect, useState } from 'react';
+import { Character, Episode } from 'types';
+import Link from 'next/link';
+import { Header } from '@components/Header';
+import { Footer } from '@components/Footer';
+import { Badge } from '@components/Badge';
 
 const CharacterDetail: React.FC = () => {
-    const { id } = useParams()
-    const router = useRouter()
+    const { id } = useParams();
+    const router = useRouter();
 
-    const [character, setCharacter] = useState<Character | null>(null)
-    const [episodes, setEpisodes] = useState<Episode[]>([])
-    const [error, setError] = useState<string | null>(null)
-    const [loading, setLoading] = useState<boolean>(true)
+    const [character, setCharacter] = useState<Character | null>(null);
+    const [episodes, setEpisodes] = useState<Episode[]>([]);
+    const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const fetchCharacterDetail = async () => {
-            setLoading(true)
-            const characterID = parseInt(id as string)
-            const result = await useCharacterDetail(characterID)
+            setLoading(true);
+            const characterID = parseInt(id as string);
+            const result = await useCharacterDetail(characterID);
 
             if (result.error) {
-                setError(result.error)
+                setError(result.error);
             } else if (result.data) {
-                setCharacter(result.data)
+                setCharacter(result.data);
 
-                const episodeResult = await useEpisodes(result.data.episode)
+                const episodeResult = await useEpisodes(result.data.episode);
                 if (episodeResult.error) {
-                    setError(episodeResult.error)
+                    setError(episodeResult.error);
                 } else {
-                    setEpisodes(episodeResult.data || [])
+                    setEpisodes(episodeResult.data || []);
                 }
             }
-            setLoading(false)
-        }
+            setLoading(false);
+        };
 
-        fetchCharacterDetail()
-    }, [id])
+        fetchCharacterDetail();
+    }, [id]);
 
     const handleSearch = (name: string) => {
-        router.push(`/?search=${name}`)
-    }
+        router.push(`/?search=${name}`);
+    };
 
     if (loading) {
-        return <LoadingSpinner />
+        return <LoadingSpinner />;
     }
 
     if (error) {
-        return <div>Error: {error}</div>
+        return <div>Error: {error}</div>;
     }
 
     return (
@@ -69,14 +69,14 @@ const CharacterDetail: React.FC = () => {
                     <h2 className="card-title text-3xl font-bold mb-2">{character?.name}</h2>
 
                     <div className="flex flex-wrap gap-3 mb-4">
-                        <Badge value={character?.status || "Unknown"} type="status" />
-                        <Badge value={character?.species || "Unknown"} type="species" />
-                        <Badge value={character?.gender || "Unknown"} type="gender" />
+                        <Badge value={character?.status || 'Unknown'} type="status" />
+                        <Badge value={character?.species || 'Unknown'} type="species" />
+                        <Badge value={character?.gender || 'Unknown'} type="gender" />
                     </div>
 
                     <div className="w-full">
                         <p className="text-lg pb-4" aria-label="Character type">
-                            <strong>Type:</strong> {character?.type || "Unknown"}
+                            <strong>Type:</strong> {character?.type || 'Unknown'}
                         </p>
                         <p className="text-lg pb-4" aria-label="Character origin">
                             <strong>Origin:</strong> {character?.origin.name}
@@ -112,7 +112,7 @@ const CharacterDetail: React.FC = () => {
             </main>
             <Footer />
         </>
-    )
-}
+    );
+};
 
-export default CharacterDetail
+export default CharacterDetail;

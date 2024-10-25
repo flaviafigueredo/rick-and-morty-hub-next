@@ -1,19 +1,19 @@
-import React, { useState } from "react"
+import React, { useState } from 'react';
 
 interface SearchFormProps {
     onSearch: (value: string) => void
 }
 
 export const SearchForm: React.FC<SearchFormProps> = ({ onSearch }) => {
-    const [inputValue, setInputValue] = useState('')
+    const [inputValue, setInputValue] = useState('');
 
     const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault()
+        e.preventDefault();
         if (inputValue.trim()) {
-            onSearch(inputValue)
-            setInputValue('')
+            onSearch(inputValue);
+            setInputValue('');
         }
-    }
+    };
 
     return (
         <form onSubmit={handleSubmit} className="input input-bordered flex items-center gap-2">
@@ -38,5 +38,5 @@ export const SearchForm: React.FC<SearchFormProps> = ({ onSearch }) => {
                 </svg>
             </button>
         </form>
-    )
-}
+    );
+};

@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react';
 
 interface PaginationProps {
     currentPage: number
@@ -13,7 +13,7 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
                 className="join-item btn"
                 onClick={() => {
                     if (currentPage > 1) {
-                        onPageChange(currentPage - 1)
+                        onPageChange(currentPage - 1);
                     }
                 }}
                 disabled={currentPage === 1}
@@ -28,7 +28,7 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
                 className="join-item btn"
                 onClick={() => {
                     if (currentPage < totalPages) {
-                        onPageChange(currentPage + 1)
+                        onPageChange(currentPage + 1);
                     }
                 }}
                 disabled={currentPage === totalPages}
@@ -37,5 +37,5 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
                 »
             </button>
         </div>
-    )
-}
+    );
+};

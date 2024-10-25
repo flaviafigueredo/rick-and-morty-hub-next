@@ -1,21 +1,21 @@
-"use client"
-import Image from "next/image"
-import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
-import bannerImage from "@assets/banner.png"
+'use client';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import bannerImage from '@assets/banner.png';
 
 export const BannerImage = () => {
-    const pathname = usePathname()
-    const [isMounted, setIsMounted] = useState(false)
+    const pathname = usePathname();
+    const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
-        setIsMounted(true)
-    }, [])
+        setIsMounted(true);
+    }, []);
 
-    if (!isMounted) return null
+    if (!isMounted) return null;
 
-    if (pathname !== "/") {
-        return null
+    if (pathname !== '/') {
+        return null;
     }
 
     return (
@@ -38,5 +38,5 @@ export const BannerImage = () => {
                 priority
             />
         </div>
-    )
-}
+    );
+};

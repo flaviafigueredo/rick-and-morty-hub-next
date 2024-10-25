@@ -1,21 +1,21 @@
-import Link from "next/link"
-import Image from "next/image"
-import logo from "@assets/icon.png"
-import React, { useState } from "react"
-import { SearchForm } from "@components/SearchForm"
+import Link from 'next/link';
+import Image from 'next/image';
+import logo from '@assets/icon.png';
+import React, { useState } from 'react';
+import { SearchForm } from '@components/SearchForm';
 
 interface HeaderProps {
     onSearch: (name: string) => void
 }
 
 export const Header: React.FC<HeaderProps> = ({ onSearch }) => {
-    const [theme, setTheme] = useState<'cmyk' | 'dracula'>('cmyk')
+    const [theme, setTheme] = useState<'cmyk' | 'dracula'>('cmyk');
 
     const toggleTheme = () => {
-        const newTheme = theme === 'cmyk' ? 'dracula' : 'cmyk'
-        setTheme(newTheme)
-        document.documentElement.setAttribute('data-theme', newTheme)
-    }
+        const newTheme = theme === 'cmyk' ? 'dracula' : 'cmyk';
+        setTheme(newTheme);
+        document.documentElement.setAttribute('data-theme', newTheme);
+    };
 
     return (
         <header className="navbar bg-base-100 shadow-lg flex justify-between items-center p-4 gap-2">
@@ -74,5 +74,5 @@ export const Header: React.FC<HeaderProps> = ({ onSearch }) => {
                 </button>
             </div>
         </header>
-    )
-}
+    );
+};

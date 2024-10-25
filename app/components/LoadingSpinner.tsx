@@ -1,5 +1,5 @@
-import Image from "next/image"
-import portalGif from "@assets/portal.gif"
+import Image from 'next/image';
+import portalGif from '@assets/portal.gif';
 
 export const LoadingSpinner = () => {
     return (
@@ -11,5 +11,5 @@ export const LoadingSpinner = () => {
                 priority
             />
         </div>
-    )
-}
+    );
+};

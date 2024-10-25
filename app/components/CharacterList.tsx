@@ -1,47 +1,47 @@
-import React, { useEffect, useState, useRef } from "react"
-import { useCharacters } from "@hooks/useCharacters"
-import { CharacterCard } from "@components/CharacterCard"
-import { Character } from "types"
-import { Pagination } from "@components/Pagination"
-import { LoadingSpinner } from "@components/LoadingSpinner"
-import { ErrorMessage } from "@components/ErrorMessage"
+import React, { useEffect, useState, useRef } from 'react';
+import { useCharacters } from '@hooks/useCharacters';
+import { CharacterCard } from '@components/CharacterCard';
+import { Character } from 'types';
+import { Pagination } from '@components/Pagination';
+import { LoadingSpinner } from '@components/LoadingSpinner';
+import { ErrorMessage } from '@components/ErrorMessage';
 
 export const CharacterList: React.FC<{ searchQuery: string }> = ({ searchQuery }) => {
-    const [characters, setCharacters] = useState<Character[]>([])
-    const [error, setError] = useState<string | null>(null)
+    const [characters, setCharacters] = useState<Character[]>([]);
+    const [error, setError] = useState<string | null>(null);
 
-    const [currentPage, setCurrentPage] = useState<number>(1)
-    const [totalPages, setTotalPages] = useState<number>(0)
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [totalPages, setTotalPages] = useState<number>(0);
 
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const listRef = useRef<HTMLDivElement>(null)
+    const listRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const fetchCharacters = async () => {
-            setIsLoading(true)
-            const result = await useCharacters(currentPage, searchQuery)
-            setIsLoading(false)
+            setIsLoading(true);
+            const result = await useCharacters(currentPage, searchQuery);
+            setIsLoading(false);
 
             if (result.error) {
-                setError(result.error)
-                setCharacters([])
+                setError(result.error);
+                setCharacters([]);
             } else if (result.data) {
-                setError(null)
-                setCharacters(result.data)
-                setTotalPages(result.totalPages || 0)
+                setError(null);
+                setCharacters(result.data);
+                setTotalPages(result.totalPages || 0);
             }
-        }
+        };
 
-        fetchCharacters()
-    }, [currentPage, searchQuery])
+        fetchCharacters();
+    }, [currentPage, searchQuery]);
 
     if (error) {
-        return <ErrorMessage message={error} />
+        return <ErrorMessage message={error} />;
     }
 
     if (isLoading) {
-        return <LoadingSpinner />
+        return <LoadingSpinner />;
     }
 
     return (
@@ -64,11 +64,11 @@ export const CharacterList: React.FC<{ searchQuery: string }> = ({ searchQuery }
                     currentPage={currentPage}
                     totalPages={totalPages}
                     onPageChange={(page) => {
-                        setCurrentPage(page)
-                        listRef.current?.scrollIntoView({ behavior: 'smooth' })
+                        setCurrentPage(page);
+                        listRef.current?.scrollIntoView({ behavior: 'smooth' });
                     }}
                 />
             )}
         </>
-    )
-}
+    );
+};

@@ -1,6 +1,6 @@
-import Link from "next/link"
-import React from "react"
-import { Badge } from "@components/Badge"
+import Link from 'next/link';
+import React from 'react';
+import { Badge } from '@components/Badge';
 
 interface CharacterCardProps {
     character: {
@@ -30,5 +30,5 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
                 </div>
             </div>
         </Link>
-    )
-}
+    );
+};

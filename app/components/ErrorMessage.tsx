@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react';
 
 interface ErrorMessageProps {
     message: string
@@ -22,5 +22,5 @@ export const ErrorMessage: React.FC<ErrorMessageProps> = ({ message }) => {
                 <span>{message}</span>
             </div>
         </section>
-    )
-}
+    );
+};

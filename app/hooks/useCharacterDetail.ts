@@ -1,5 +1,5 @@
-import { api } from "@services/api"
-import { Character } from "types"
+import { api } from '@services/api';
+import { Character } from 'types';
 
 interface UseCharacterDetailResult {
     data?: Character | null
@@ -8,11 +8,11 @@ interface UseCharacterDetailResult {
 
 export async function useCharacterDetail(characterID: number): Promise<UseCharacterDetailResult> {
     try {
-        const response = await api.get(`/character/${characterID}`)
-        const character: Character = response.data
-        return { data: character }
+        const response = await api.get(`/character/${characterID}`);
+        const character: Character = response.data;
+        return { data: character };
     } catch (error: any) {
-        const errorMessage: string = error.message
-        return { error: errorMessage }
+        const errorMessage: string = error.message;
+        return { error: errorMessage };
     }
 }
