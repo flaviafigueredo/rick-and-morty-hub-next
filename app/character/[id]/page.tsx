@@ -5,6 +5,7 @@ import { useCharacterDetail } from '@hooks/useCharacterDetail';
 import { useEpisodes } from '@hooks/useEpisode';
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Header } from '@components/Header';
 import { Footer } from '@components/Footer';
 import { Badge } from '@components/Badge';
@@ -40,9 +41,17 @@ const CharacterDetail: React.FC = () => {
             <main className="flex flex-col justify-center items-center gap-3 min-h-full p-6 mx-auto" style={{ maxWidth: '500px' }}>
                 <div className="flex flex-col items-center justify-center p-2 w-full">
                     <figure className="mb-4 drop-shadow-lg">
-                        <img src={character?.image}
-                            alt={`Image of ${character?.name}, a ${character?.species} from ${character?.origin.name}`}
-                            className="rounded-lg" />
+                        <Image
+                            src={character?.image || 'https://placehold.co/300x300?text=Image+Not+Found'}
+                            alt={character?.image ?
+                                `Image of ${character?.name}, a ${character?.species} from ${character?.origin.name}` :
+                                `Image not found for ${character?.name}`
+                            }
+                            className="rounded-lg"
+                            priority
+                            width={300}
+                            height={300}
+                        />
                     </figure>
 
                     <h2 className="card-title text-3xl font-bold mb-2">{character?.name}</h2>
@@ -64,7 +73,7 @@ const CharacterDetail: React.FC = () => {
                             <strong>Location:</strong> {character?.location.name}
                         </p>
 
-                        <details className="collapse collapse-arrow" aria-expanded="false" aria-controls="episode-list">
+                        <details className="collapse collapse-arrow">
                             <summary className="collapse-title text-lg px-0">
                                 <strong>Episodes</strong>
                             </summary>
