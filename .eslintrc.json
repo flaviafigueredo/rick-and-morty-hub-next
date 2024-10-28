@@ -4,10 +4,31 @@
     "next/typescript"
   ],
   "rules": {
-    "quotes": ["error", "single"],
-    "semi": ["error", "always"],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
-    "react/display-name": "off"
-  }
+    "react/display-name": "off",
+    "@typescript-eslint/no-explicit-any": "off"
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/__tests__/**/*.{ts,tsx}",
+        "**/*.test.{ts,tsx}"
+      ],
+      "rules": {
+        "@next/next/no-img-element": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "jsx-a11y/alt-text": "off"
+      }
+    }
+  ]
 }
