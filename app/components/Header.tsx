@@ -37,6 +37,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearch }) => {
                     <label className="grid cursor-pointer place-items-center">
                         <input
                             type="checkbox"
+                            name="toggleTheme"
                             value="synthwave"
                             className="toggle theme-controller bg-base-content col-span-2 col-start-1 row-start-1"
                             checked={theme === 'dracula'}

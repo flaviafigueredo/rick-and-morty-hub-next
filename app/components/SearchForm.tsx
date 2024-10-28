@@ -19,6 +19,7 @@ export const SearchForm: React.FC<SearchFormProps> = ({ onSearch }) => {
         <form onSubmit={handleSubmit} className="input input-bordered flex items-center gap-2">
             <input
                 type="text"
+                name="characterName"
                 className="grow w-full md:w-1/2 placeholder:text-sm"
                 placeholder="Search by name"
                 value={inputValue}
