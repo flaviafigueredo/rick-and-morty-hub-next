@@ -16,7 +16,7 @@ export function useCharacterDetail(characterID: number) {
                 if (error instanceof Error) {
                     setError(error.message);
                 } else {
-                    setError("An unexpected error occurred");
+                    setError('An unexpected error occurred');
                 }
             } finally {
                 setLoading(false);
