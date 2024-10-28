@@ -12,8 +12,12 @@ export function useCharacterDetail(characterID: number) {
             try {
                 const response = await api.get(`/character/${characterID}`);
                 setData(response.data);
-            } catch (error: any) {
-                setError(error.message);
+            } catch (error: unknown) {
+                if (error instanceof Error) {
+                    setError(error.message);
+                } else {
+                    setError("An unexpected error occurred");
+                }
             } finally {
                 setLoading(false);
             }

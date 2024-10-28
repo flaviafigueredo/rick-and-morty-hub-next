@@ -15,8 +15,12 @@ export function useEpisodes(episodeLinks: string[]) {
                 const responses = await Promise.all(episodeRequests);
                 const episodes: Episode[] = responses.map(response => response.data);
                 setData(episodes);
-            } catch (error: any) {
-                setError(error.message);
+            } catch (error: unknown) {
+                if (error instanceof Error) {
+                    setError(error.message);
+                } else {
+                    setError("An unexpected error occurred");
+                }
             } finally {
                 setLoading(false);
             }
