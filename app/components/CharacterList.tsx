@@ -1,46 +1,36 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useCharacters } from '@hooks/useCharacters';
 import { CharacterCard } from '@components/CharacterCard';
-import { Character } from 'types';
 import { Pagination } from '@components/Pagination';
 import { LoadingSpinner } from '@components/LoadingSpinner';
 import { ErrorMessage } from '@components/ErrorMessage';
 
 export const CharacterList: React.FC<{ searchQuery: string }> = ({ searchQuery }) => {
-    const [characters, setCharacters] = useState<Character[]>([]);
-    const [error, setError] = useState<string | null>(null);
-
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [totalPages, setTotalPages] = useState<number>(0);
 
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const { data: characters, error, totalPages } = useCharacters(currentPage, searchQuery);
+
+    const [loading, setLoading] = useState<boolean>(true);
 
     const listRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const fetchCharacters = async () => {
-            setIsLoading(true);
-            const result = await useCharacters(currentPage, searchQuery);
-            setIsLoading(false);
-
-            if (result.error) {
-                setError(result.error);
-                setCharacters([]);
-            } else if (result.data) {
-                setError(null);
-                setCharacters(result.data);
-                setTotalPages(result.totalPages || 0);
-            }
-        };
-
-        fetchCharacters();
+        setLoading(true);
     }, [currentPage, searchQuery]);
+
+    useEffect(() => {
+        if (error) {
+            setLoading(false);
+        } else if (characters.length > 0) {
+            setLoading(false);
+        }
+    }, [characters, error]);
 
     if (error) {
         return <ErrorMessage message={error} />;
     }
 
-    if (isLoading) {
+    if (loading) {
         return <LoadingSpinner />;
     }
 
@@ -62,7 +52,7 @@ export const CharacterList: React.FC<{ searchQuery: string }> = ({ searchQuery }
             {characters.length > 0 && (
                 <Pagination
                     currentPage={currentPage}
-                    totalPages={totalPages}
+                    totalPages={totalPages || 0}
                     onPageChange={(page) => {
                         setCurrentPage(page);
                         listRef.current?.scrollIntoView({ behavior: 'smooth' });

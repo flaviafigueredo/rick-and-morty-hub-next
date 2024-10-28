@@ -3,56 +3,35 @@ import { useParams, useRouter } from 'next/navigation';
 import { LoadingSpinner } from '@components/LoadingSpinner';
 import { useCharacterDetail } from '@hooks/useCharacterDetail';
 import { useEpisodes } from '@hooks/useEpisode';
-import React, { useEffect, useState } from 'react';
-import { Character, Episode } from 'types';
+import React from 'react';
 import Link from 'next/link';
 import { Header } from '@components/Header';
 import { Footer } from '@components/Footer';
 import { Badge } from '@components/Badge';
+import { ErrorMessage } from '@components/ErrorMessage';
 
 const CharacterDetail: React.FC = () => {
     const { id } = useParams();
     const router = useRouter();
 
-    const [character, setCharacter] = useState<Character | null>(null);
-    const [episodes, setEpisodes] = useState<Episode[]>([]);
-    const [error, setError] = useState<string | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-
-    useEffect(() => {
-        const fetchCharacterDetail = async () => {
-            setLoading(true);
-            const characterID = parseInt(id as string);
-            const result = await useCharacterDetail(characterID);
-
-            if (result.error) {
-                setError(result.error);
-            } else if (result.data) {
-                setCharacter(result.data);
-
-                const episodeResult = await useEpisodes(result.data.episode);
-                if (episodeResult.error) {
-                    setError(episodeResult.error);
-                } else {
-                    setEpisodes(episodeResult.data || []);
-                }
-            }
-            setLoading(false);
-        };
-
-        fetchCharacterDetail();
-    }, [id]);
+    const characterID = parseInt(id as string);
+    const { data: character, error: characterError, loading: characterLoading } = useCharacterDetail(characterID);
+    const { data: episodes, error: episodesError, loading: episodesLoading } = useEpisodes(character?.episode || []);
 
     const handleSearch = (name: string) => {
         router.push(`/?search=${name}`);
     };
 
-    if (loading) {
+    if (characterLoading || episodesLoading) {
         return <LoadingSpinner />;
     }
 
-    if (error) {
-        return <div>Error: {error}</div>;
+    if (characterError) {
+        return <ErrorMessage message={`Error fetching character: ${characterError}`} />;
+    }
+
+    if (episodesError) {
+        return <ErrorMessage message={`Error fetching episodes: ${episodesError}`} />;
     }
 
     return (

@@ -1,19 +1,33 @@
+import { useEffect, useState } from 'react';
 import { api } from '@services/api';
 import { Episode } from 'types';
 
-interface UseEpisodesResult {
-    data?: Episode[]
-    error?: string
-}
+export function useEpisodes(episodeLinks: string[]) {
+    const [data, setData] = useState<Episode[]>([]);
+    const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
 
-export async function useEpisodes(episodeLinks: string[]): Promise<UseEpisodesResult> {
-    try {
-        const episodeResquests = episodeLinks.map(link => api.get(link));
-        const responses = await Promise.all(episodeResquests);
-        const episodes: Episode[] = responses.map(response => response.data);
-        return { data: episodes };
-    } catch (error: any) {
-        const errorMessage: string = error.message;
-        return { error: errorMessage };
-    }
+    useEffect(() => {
+        const fetchEpisodes = async () => {
+            setLoading(true);
+            try {
+                const episodeRequests = episodeLinks.map(link => api.get(link));
+                const responses = await Promise.all(episodeRequests);
+                const episodes: Episode[] = responses.map(response => response.data);
+                setData(episodes);
+            } catch (error: any) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (episodeLinks.length > 0) {
+            fetchEpisodes();
+        } else {
+            setLoading(false);
+        }
+    }, [episodeLinks]);
+
+    return { data, error, loading };
 }

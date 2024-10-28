@@ -1,29 +1,40 @@
+import { useEffect, useState } from 'react';
 import { api } from '@services/api';
 import { Character } from 'types';
+import { AxiosError } from 'axios';
 
 interface UseCharactersResult {
-    data?: Character[]
-    error?: string
-    totalPages?: number
+    data: Character[];
+    error?: string;
+    totalPages?: number;
 }
 
-export async function useCharacters(pageID: number, nameFilter?: string): Promise<UseCharactersResult> {
-    try {
-        const query = nameFilter
-            ? `/character?name=${nameFilter}&page=${pageID}`
-            : `/character?page=${pageID}`;
+export function useCharacters(pageID: number, nameFilter?: string): UseCharactersResult {
+    const [data, setData] = useState<Character[]>([]);
+    const [error, setError] = useState<string | undefined>(undefined);
+    const [totalPages, setTotalPages] = useState<number>(0);
 
-        const response = await api.get(query);
+    useEffect(() => {
+        const fetchCharacters = async () => {
+            const query = nameFilter
+                ? `/character?name=${nameFilter}&page=${pageID}`
+                : `/character?page=${pageID}`;
 
-        const characters: Character[] = response.data.results;
-        const totalPages: number = response.data.info.pages;
-        return { data: characters, totalPages };
-    } catch (error: any) {
-        if (error.response?.status === 404) {
-            return { error: 'Character not found. Please try again.' };
-        }
+            try {
+                const response = await api.get(query);
+                setData(response.data.results);
+                setTotalPages(response.data.info.pages);
+            } catch (error) {
+                const axiosError = error as AxiosError;
+                const errorMessage: string = axiosError.response?.status === 404
+                    ? 'Character not found. Please try again.'
+                    : axiosError.message || 'An unexpected error occurred.';
+                setError(errorMessage);
+            }
+        };
 
-        const errorMessage: string = error.message || 'An unexpected error occurred.';
-        return { error: errorMessage };
-    }
+        fetchCharacters();
+    }, [pageID, nameFilter]);
+
+    return { data, error, totalPages };
 }
