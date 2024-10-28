@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { render, waitFor, screen } from '@testing-library/react';
 import { useEpisodes } from '@hooks/useEpisode';
 import { api } from '../services/api';
@@ -7,24 +7,11 @@ import { Episode } from 'types';
 jest.mock('../services/api');
 
 const TestComponent: React.FC<{ episodeLinks: string[] }> = ({ episodeLinks }) => {
-  const [data, setData] = useState<Episode[] | undefined>(undefined);
-  const [error, setError] = useState<string | undefined>(undefined);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await useEpisodes(episodeLinks);
-      if (result.error) {
-        setError(result.error);
-      } else {
-        setData(result.data);
-      }
-    };
-
-    fetchData();
-  }, [episodeLinks]);
+  const { data, error, loading } = useEpisodes(episodeLinks);
 
   if (error) return <div>{error}</div>;
-  if (!data) return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>;
+  if (!data.length) return null;
 
   return (
     <div>

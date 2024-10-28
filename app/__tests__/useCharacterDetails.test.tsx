@@ -1,30 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { render, waitFor, screen } from '@testing-library/react';
 import { useCharacterDetail } from '@hooks/useCharacterDetail';
 import { api } from '../services/api';
-import { Character } from 'types';
 
 jest.mock('../services/api');
 
 const TestComponent: React.FC<{ characterID: number }> = ({ characterID }) => {
-  const [data, setData] = useState<Character | null | undefined>(undefined);
-  const [error, setError] = useState<string | undefined>(undefined);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await useCharacterDetail(characterID);
-      if (result.error) {
-        setError(result.error);
-      } else {
-        setData(result.data);
-      }
-    };
-
-    fetchData();
-  }, [characterID]);
+  const { data, error, loading } = useCharacterDetail(characterID);
 
   if (error) return <div>{error}</div>;
-  if (!data) return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>;
+  if (!data) return null;
 
   return (
     <div>
