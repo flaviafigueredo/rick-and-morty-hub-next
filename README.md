@@ -2,7 +2,15 @@
 
 ## Descrição
 
-Este projeto é uma aplicação desenvolvida em Next.js, que permite explorar os personagens do universo de *Rick and Morty*. A aplicação utiliza a API do Rick and Morty para fornecer informações sobre os personagens.
+Este projeto é uma aplicação desenvolvida em Next.js, que permite explorar os personagens do universo de *Rick and Morty*. A aplicação utiliza a [API do Rick and Morty](https://rickandmortyapi.com/) para fornecer informações detalhadas sobre os personagens, como nome, status, espécie, e episódios em que aparecem.
+
+## Funcionalidades
+
+- **Pesquisa de personagens**: Busca por personagens pelo nome.
+- **Lista de personagens**: Exibe uma lista com personagens e informações resumidas.
+- **Detalhes do personagem**: Exibe detalhes de cada personagem ao clicar em um card.
+- **Navegação entre páginas**: Permite ao usuário navegar entre diferentes páginas de resultados, facilitando a exploração completa dos personagens.
+- **Navegação intuitiva**: Interface simplificada e responsiva para melhorar a experiência do usuário.
 
 ## Tecnologias Utilizadas
 
@@ -17,6 +25,11 @@ Este projeto é uma aplicação desenvolvida em Next.js, que permite explorar os
     globals.css
     layout.tsx 
     page.tsx
+    /components
+    /character
+    /hooks
+    /services
+    /types
 ```
 
 ## Instalação
