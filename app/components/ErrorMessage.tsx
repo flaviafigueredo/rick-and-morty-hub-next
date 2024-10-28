@@ -19,7 +19,10 @@ export const ErrorMessage: React.FC<ErrorMessageProps> = ({ message }) => {
                         strokeWidth="2"
                         d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span>{message}</span>
+                <div>
+                    <p>{message}</p>
+                    <p className="text-center">Or <a href="/" aria-label="Go to homepage" className="underline"> return to the homepage.</a></p>
+                </div>
             </div>
         </section>
     );
