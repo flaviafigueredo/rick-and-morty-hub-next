@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useCharacters } from '@hooks/useCharacters';
 import { CharacterCard } from '@components/CharacterCard';
 import { Pagination } from '@components/Pagination';
@@ -8,23 +8,9 @@ import { ErrorMessage } from '@components/ErrorMessage';
 export const CharacterList: React.FC<{ searchQuery: string }> = ({ searchQuery }) => {
     const [currentPage, setCurrentPage] = useState<number>(1);
 
-    const { data: characters, error, totalPages } = useCharacters(currentPage, searchQuery);
-
-    const [loading, setLoading] = useState<boolean>(true);
+    const { data: characters, error, totalPages, loading } = useCharacters(currentPage, searchQuery);
 
     const listRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        setLoading(true);
-    }, [currentPage, searchQuery]);
-
-    useEffect(() => {
-        if (error) {
-            setLoading(false);
-        } else if (characters.length > 0) {
-            setLoading(false);
-        }
-    }, [characters, error]);
 
     if (error) {
         return <ErrorMessage message={error} />;
