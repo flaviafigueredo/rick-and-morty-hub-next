@@ -10,10 +10,11 @@ jest.mock('../hooks/useCharacters', () => ({
 
 describe('CharacterList component', () => {
     it('should render \'No characters found.\' when no characters are found', async () => {
-        (useCharacters as jest.Mock).mockResolvedValue({
+        (useCharacters as jest.Mock).mockReturnValue({
             data: [],
             totalPages: 0,
             error: null,
+            loading: false,
         });
 
         render(<CharacterList searchQuery="test" />);
@@ -24,24 +25,26 @@ describe('CharacterList component', () => {
     });
 
     it('should display loading spinner during search', async () => {
-        (useCharacters as jest.Mock).mockReturnValueOnce({
+        (useCharacters as jest.Mock).mockReturnValue({
             data: [],
             totalPages: 0,
             error: null,
+            loading: true,
         });
 
         render(<CharacterList searchQuery="test" />);
 
         await waitFor(() => {
-            expect(screen.getByRole('status')).toBeInTheDocument();
+            expect(screen.getByLabelText('Loading content')).toBeInTheDocument();
         });
     });
 
     it('should display an error message when a search error occurs', async () => {
-        (useCharacters as jest.Mock).mockResolvedValueOnce({
+        (useCharacters as jest.Mock).mockReturnValue({
             data: [],
             totalPages: 0,
             error: 'Error fetching characters',
+            loading: false,
         });
 
         render(<CharacterList searchQuery="test" />);
@@ -53,14 +56,29 @@ describe('CharacterList component', () => {
 
     it('should render characters when the search is successful', async () => {
         const charactersData = [
-            { id: 1, name: 'Rick Sanchez', species: 'Human', image: 'rick.jpg' },
-            { id: 2, name: 'Morty Smith', species: 'Human', image: 'morty.jpg' },
+            {
+                id: 1,
+                name: 'Rick Sanchez',
+                status: 'Alive',
+                species: 'Human',
+                gender: 'Male',
+                image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg'
+            },
+            {
+                id: 2,
+                name: 'Morty Smith',
+                status: 'Alive',
+                species: 'Human',
+                gender: 'Male',
+                image: 'https://rickandmortyapi.com/api/character/avatar/2.jpeg'
+            },
         ];
 
-        (useCharacters as jest.Mock).mockResolvedValueOnce({
+        (useCharacters as jest.Mock).mockReturnValue({
             data: charactersData,
             totalPages: 1,
             error: null,
+            loading: false,
         });
 
         render(<CharacterList searchQuery="test" />);
@@ -74,60 +92,49 @@ describe('CharacterList component', () => {
     });
 
     it('should render pagination and handle page change', async () => {
-        const mockResult = {
+        const mockResultPage1 = {
             data: [
-                { id: 1, name: 'Rick' },
-                { id: 2, name: 'Morty' },
+                { id: 1, name: 'Rick', image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg' },
+                { id: 2, name: 'Morty', image: 'https://rickandmortyapi.com/api/character/avatar/2.jpeg' },
             ],
             totalPages: 2,
+            error: null,
+            loading: false,
         };
 
-        (useCharacters as jest.Mock).mockResolvedValue(mockResult);
+        const mockResultPage2 = {
+            data: [
+                { id: 3, name: 'Summer', image: 'https://rickandmortyapi.com/api/character/avatar/3.jpeg' },
+                { id: 4, name: 'Beth', image: 'https://rickandmortyapi.com/api/character/avatar/4.jpeg' },
+            ],
+            totalPages: 2,
+            error: null,
+            loading: false,
+        };
+
+        (useCharacters as jest.Mock).mockImplementation((page) => {
+            return page === 1 ? mockResultPage1 : mockResultPage2;
+        });
 
         render(<CharacterList searchQuery="" />);
 
-        await waitFor(() => {
-            expect(screen.queryByLabelText('Loading content')).not.toBeInTheDocument();
-        });
+        expect(await screen.findByText('Rick')).toBeInTheDocument();
+        expect(screen.getByText('Morty')).toBeInTheDocument();
 
         const nextButton = screen.getByLabelText('Next page');
-        const prevButton = screen.getByLabelText('Previous page');
-
         expect(nextButton).toBeInTheDocument();
-        expect(prevButton).toBeInTheDocument();
 
         fireEvent.click(nextButton);
 
-        const updatedResult = {
-            data: [
-                { id: 3, name: 'Summer' },
-                { id: 4, name: 'Beth' },
-            ],
-            totalPages: 2,
-        };
+        expect(await screen.findByText('Summer')).toBeInTheDocument();
+        expect(screen.getByText('Beth')).toBeInTheDocument();
 
-        (useCharacters as jest.Mock).mockResolvedValueOnce(updatedResult);
-
-        await waitFor(() => {
-            expect(screen.getByLabelText('Previous page')).toBeInTheDocument();
-            expect(screen.getByLabelText('Next page')).toBeInTheDocument();
-        });
+        const prevButton = screen.getByLabelText('Previous page');
+        expect(prevButton).toBeInTheDocument();
 
         fireEvent.click(prevButton);
 
-        const revertedResult = {
-            data: [
-                { id: 1, name: 'Rick' },
-                { id: 2, name: 'Morty' },
-            ],
-            totalPages: 2,
-        };
-
-        (useCharacters as jest.Mock).mockResolvedValueOnce(revertedResult);
-
-        await waitFor(() => {
-            expect(screen.getByLabelText('Previous page')).toBeInTheDocument();
-            expect(screen.getByLabelText('Next page')).toBeInTheDocument();
-        });
+        expect(await screen.findByText('Rick')).toBeInTheDocument();
+        expect(screen.getByText('Morty')).toBeInTheDocument();
     });
 });
