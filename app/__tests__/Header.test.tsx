@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import { ReactNode, AnchorHTMLAttributes } from 'react';
 import { Header } from '@components/Header';
 
@@ -45,10 +45,14 @@ describe('Header component', () => {
 
         expect(toggleInput).not.toBeChecked();
 
-        toggleInput.click();
+        act(() => {
+            toggleInput.click();
+        });
         expect(toggleInput).toBeChecked();
 
-        toggleInput.click();
+        act(() => {
+            toggleInput.click();
+        });
         expect(toggleInput).not.toBeChecked();
     });
 });
