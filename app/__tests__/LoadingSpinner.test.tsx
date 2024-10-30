@@ -1,7 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { LoadingSpinner } from '@components/LoadingSpinner';
 
-jest.mock('next/image', () => (props: any) => <img {...props} />);
+jest.mock('next/image', () => (props: any) => {
+    const { priority, ...rest } = props;
+    return <img {...rest} />;
+});
 
 describe('LoadingSpinner component', () => {
     it('should render the loading spinner', () => {
