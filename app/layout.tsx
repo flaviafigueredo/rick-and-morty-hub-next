@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { SearchProvider } from 'context/SearchContext';
+import { Header } from '@components/Header';
+import { Footer } from '@components/Footer';
 
 export const metadata: Metadata = {
   title: 'Rick and Morty Character Hub',
@@ -17,14 +20,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="shortcut icon" href="/icon.png" type="image/x-icon" />
-      </head>
-      <body
-        className="antialiased">
-        {children}
-      </body>
-    </html>
+    <SearchProvider>
+      <html lang="en">
+        <head>
+          <link rel="shortcut icon" href="/icon.png" type="image/x-icon" />
+        </head>
+        <body
+          className="antialiased">
+          <Header />
+          {children}
+          <Footer />
+        </body>
+      </html>
+    </SearchProvider>
   );
 }

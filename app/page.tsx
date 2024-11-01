@@ -1,13 +1,13 @@
 'use client';
 import React, { useState } from 'react';
-import { Header } from '@components/Header';
 import { BannerImage } from '@components/BannerImage';
 import { CharacterList } from '@components/CharacterList';
-import { Footer } from '@components/Footer';
 import { LoadingSpinner } from '@components/LoadingSpinner';
+import { useSearch } from 'context/SearchContext';
 
 const Home: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const { searchQuery } = useSearch();
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   React.useEffect(() => {
@@ -18,22 +18,16 @@ const Home: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleSearch = (name: string) => {
-    setSearchQuery(name);
-  };
-
   if (isLoading) {
     return <LoadingSpinner />;
   }
 
   return (
     <>
-      <Header onSearch={handleSearch} />
       <BannerImage />
       <main>
         <CharacterList searchQuery={searchQuery} />
       </main>
-      <Footer />
     </>
   );
 };

@@ -1,27 +1,20 @@
 'use client';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { LoadingSpinner } from '@components/LoadingSpinner';
 import { useCharacterDetail } from '@hooks/useCharacterDetail';
 import { useEpisodes } from '@hooks/useEpisode';
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Header } from '@components/Header';
-import { Footer } from '@components/Footer';
 import { Badge } from '@components/Badge';
 import { ErrorMessage } from '@components/ErrorMessage';
 
 const CharacterDetail: React.FC = () => {
     const { id } = useParams();
-    const router = useRouter();
 
     const characterID = parseInt(id as string);
     const { data: character, error: characterError, loading: characterLoading } = useCharacterDetail(characterID);
     const { data: episodes, error: episodesError, loading: episodesLoading } = useEpisodes(character?.episode || []);
-
-    const handleSearch = (name: string) => {
-        router.push(`/?search=${name}`);
-    };
 
     if (characterLoading || episodesLoading) {
         return <LoadingSpinner />;
@@ -37,7 +30,6 @@ const CharacterDetail: React.FC = () => {
 
     return (
         <>
-            <Header onSearch={handleSearch} />
             <main className="flex flex-col justify-center items-center gap-3 min-h-full p-6 mx-auto" style={{ maxWidth: '500px' }}>
                 <div className="flex flex-col items-center justify-center p-2 w-full">
                     <figure className="mb-4 drop-shadow-lg">
@@ -98,7 +90,6 @@ const CharacterDetail: React.FC = () => {
                     <button className="btn btn-neutral self-end" aria-label="Go back to character list">Back</button>
                 </Link>
             </main>
-            <Footer />
         </>
     );
 };

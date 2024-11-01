@@ -1,13 +1,13 @@
+'use client';
 import Link from 'next/link';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { SearchForm } from '@components/SearchForm';
+import { useSearch } from 'context/SearchContext';
 
-interface HeaderProps {
-    onSearch: (name: string) => void
-}
+export const Header: React.FC = () => {
+    const { handleSearch } = useSearch();
 
-export const Header: React.FC<HeaderProps> = ({ onSearch }) => {
     const [theme, setTheme] = useState<'cmyk' | 'dracula'>('cmyk');
 
     const toggleTheme = () => {
@@ -18,7 +18,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearch }) => {
 
     return (
         <header className="navbar bg-base-100 shadow-lg flex justify-between items-center p-4 gap-2">
-            <Link href="/" onClick={() => onSearch('')} aria-label="Go to homepage">
+            <Link href="/" onClick={() => handleSearch('')} aria-label="Go to homepage">
                 <div>
                     <Image
                         src="/icon.png"
@@ -30,7 +30,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearch }) => {
             </Link>
 
             <div className="flex items-center gap-2">
-                <SearchForm onSearch={onSearch} />
+                <SearchForm onSearch={handleSearch} />
 
                 <button aria-label="Toggle theme">
                     <label className="grid cursor-pointer place-items-center">
