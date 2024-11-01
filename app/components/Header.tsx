@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import logo from '@assets/icon.png';
 import React, { useState } from 'react';
 import { SearchForm } from '@components/SearchForm';
 
@@ -22,7 +21,7 @@ export const Header: React.FC<HeaderProps> = ({ onSearch }) => {
             <Link href="/" onClick={() => onSearch('')} aria-label="Go to homepage">
                 <div>
                     <Image
-                        src={logo}
+                        src="/icon.png"
                         alt="Rick and Morty Logo"
                         width={50}
                         height={50}
